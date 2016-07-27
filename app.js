@@ -3,7 +3,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var twilio = require('twilio');
 
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.get('/', function(request, response) {  
   var resp = new twilio.TwimlResponse();
