@@ -6,13 +6,12 @@ var qs = require('querystring');
 
 const port = process.env.PORT || 3000
 
-app.get('/', function(request, response) {  
+app.post('/', function(request, response) {  
   var data = qs.parse(request);
   var jsonString = JSON.stringify(data);
   var JsonDataObject = JSON.parse(jsonString);
 
   console.log(JsonDataObject);
-
    // response.writeHead(200, {
    //      'Content-Type':'text/xml'
    //  });
