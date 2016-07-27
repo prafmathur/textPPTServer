@@ -19,10 +19,13 @@ app.post('/', function(request, response) {
 
   // TODO: Karan, the return format has to be this or something like it:
   //       Basically a json object inside the response.jsonp parenthesis
-
   response.jsonp({"command":"next", "sender":"232-123-1232"});
-
 })
+
+app.get('/', function(request, response) {  
+  response.jsonp({"command":"next", "sender":"232-123-1232"});
+})
+
 
 app.listen(port, function(err) {  
   if (err) {
@@ -30,12 +33,3 @@ app.listen(port, function(err) {
   }
   console.log('server is listening on ' + port)
 })
-
-
-io.on('connection', function (socket) {
-  console.log("CONNECTED");
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
