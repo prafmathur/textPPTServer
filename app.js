@@ -10,6 +10,7 @@ const port = process.env.PORT || 3000
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
+var curr_command;
 
 app.post('/', function(request, response) {  
   
@@ -17,14 +18,18 @@ app.post('/', function(request, response) {
   var sender = request.body.From;
   var message = request.body.Body;
 
+  curr_command = {"command": message, "sender" : sender, "timestamp" : Date.now()};
 
- 
-  response.jsonp({"command": message, "sender" : sender});
+  response.jsonp({"command": message, "sender" : sender, "timestamp" : Date.now()});
 })
 
 app.get('/', function(request, response) {
-  console.log('welcome')  ;
-  response.jsonp({"command":"next", "sender":"232-123-1232"});
+  console.log('welcome');
+  if (curr_command == null) {
+    response.send('error');
+  }
+  console.log('got' + curr_command);
+  response.send(curr_command);
 })
 
 
