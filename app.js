@@ -2,27 +2,28 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var twilio = require('twilio');
+var bodyParser = require('body-parser');
 var qs = require('querystring');
 
 const port = process.env.PORT || 3000
 
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
+
 app.post('/', function(request, response) {  
-  var data = qs.parse(request);
-  var jsonString = JSON.stringify(data);
-  var JsonDataObject = JSON.parse(jsonString);
+  
+  console.log(request.body);
+  var sender = request.body.From;
+  var message = request.body.Body;
 
-  console.log(JsonDataObject);
-   // response.writeHead(200, {
-   //      'Content-Type':'text/xml'
-   //  });
-   //  response.end(resp.toString());
 
-  // TODO: Karan, the return format has to be this or something like it:
-  //       Basically a json object inside the response.jsonp parenthesis
-  response.jsonp({"command":"next", "sender":"232-123-1232"});
+ 
+  response.jsonp({"command": message, "sender" : sender});
 })
 
-app.get('/', function(request, response) {  
+app.get('/', function(request, response) {
+  console.log('welcome')  ;
   response.jsonp({"command":"next", "sender":"232-123-1232"});
 })
 
