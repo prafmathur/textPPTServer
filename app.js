@@ -13,14 +13,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var curr_command;
 
 app.post('/', function(request, response) {  
-  
   console.log(request.body);
   var sender = request.body.From;
   var message = request.body.Body;
-
   curr_command = {"command": message, "sender" : sender, "timestamp" : Date.now()};
-
-  response.jsonp({"command": message, "sender" : sender, "timestamp" : Date.now()});
+  response.send()
 })
 
 app.get('/', function(request, response) {
@@ -29,7 +26,7 @@ app.get('/', function(request, response) {
     response.send('error');
   }
   console.log('got' + curr_command);
-  response.send(curr_command);
+  response.jsonp(curr_command);
 })
 
 
